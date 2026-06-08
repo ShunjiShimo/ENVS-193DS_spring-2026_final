@@ -1,0 +1,33 @@
+---
+title: "envs-193ds-spring-2026-final"
+author: "Shunji Shimoyoshi"
+date: 06-07-2026
+format: pdf
+execute: 
+  message: false
+  warning: false
+---
+
+# Setup
+
+```{r}
+
+```
+
+# Problem 1. Research writing
+
+
+
+
+
+# Problem 2. Data analysis
+
+
+
+
+
+# Problem 3. Affective and exploratory visualizations
+
+
+
+

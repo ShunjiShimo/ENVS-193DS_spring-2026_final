@@ -1,2 +1,17 @@
 # ENVS-193DS_spring-2026_final
 Final for ENV S 193DS Spring 2026
+
+## General information
+
+- info about what the repo is for (what analyses, etc.)
+- who is contributing to the repo and where it came from if it's a fork
+
+## Data and file information
+
+- describe the files corresponding to data
+- describe the files corresponding to code
+- (optional but nice) provide a tree diagram
+
+## Rendered output
+
+- link to any rendered pdf from a qmd
