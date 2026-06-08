@@ -16,17 +16,27 @@ execute:
 
 # Problem 1. Research writing
 
+## a. Transparent statistical methods
 
+In part 1, they used a logistic regression to predict the probability that American Avocets would use microhabitats based on distance to water edge.
 
+In part 2, they used a chi-square test to determine if there is a relationship between bird species and habitat type. 
 
+## b. Suggestions for rewriting
+
+American Avocets were more likely to use some microhabitats more than others based on distance to water edge. The habitat's distance to water edge seems to have an influence on probability that American Avocets would use it.
+
+Habitat use differed between bird species (American Avocet, Forster's Tern, Black-necked Stilt), based on its type (managed pond, non-tidal marsh, salt pond, tidal marsh, tidal mudflat). The bird species were not evenly distributed among these habitat types.
+
+## c. Further analysis
+
+Another variable that could influence the probability of American Avocet microhabitat use is distance to nearest road. This would be a continuous variable measured in meters to the nearest road that regular cars drive on. The noise and air pollution from the cars might disrupt and discourage the birds from using the microhabitat, meaning probability of microhabitat use would most likely increase the further the habitat is from a road.
 
 # Problem 2. Data analysis
 
 
-
-
-
 # Problem 3. Affective and exploratory visualizations
+
 
 
 
