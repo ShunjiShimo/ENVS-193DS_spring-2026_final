@@ -18,6 +18,8 @@ execute:
 library(tidyverse)
 library(here)
 library(janitor)
+library(MuMIn)
+library(DHARMa)
 nests <- read_csv(here("data","nest_data_final.csv"))
 
 ```
@@ -81,11 +83,48 @@ In the `case_control` column, which is the response variable, the 1s represent a
 
 ## c. Purpose of study
 
+Tree height is a continuous variable measured in cm. As tree height increases, the probability of nest occurrence increases because the canopy is denser higher up and provides more cover for the bird nest. This is described in the second paragraph in the Discussion section.
+
+Acacia ant species is a categorical variable, where its presence on a host tree is denoted by a code unique to its species. Based on biological relationships, trees with *C. nigriceps* and *C. mimosae* increase the probability of nest occurrence much more than trees with *C. sjostedti* because they defend their trees from herbivores and bird predators much more aggressively. This is described in the first and second paragraphs in the Discussion section.
+
 ## d. Table of models
+
+2 models total:
+
+| Model number | Tree Height | Ant Species | Model Description                      |  
+|--------------|:-----------:|:-----------:|:--------------------------------------:|  
+| 1            |       X     |      X      | all predictors (no interaction term)   |
+| 2            |       X     |      X      | all predictors (with interaction term) | 
 
 ## e. Run the models
 
+```{r}
+#| label: model fitting
+
+# model 1: no interaction
+nests_mod1 <- lm(case_control ~ height_cm + ant_species,
+                 data = nests_clean)
+
+#model 2: with interaction
+nests_mod2 <- lm(case_control ~ height_cm * ant_species,
+                  data = nests_clean)
+
+```
+
 ## f. Select the best model
+
+```{r}
+#| label: model selection
+
+AICc(
+  nests_mod1,
+  nests_mod2
+) |> 
+  arrange(AICc)
+
+```
+
+The best model as determined by Akaike's Information Criterion (AIC) was 
 
 ## g. Check the diagnostics
 
