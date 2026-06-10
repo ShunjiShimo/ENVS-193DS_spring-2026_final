@@ -3,15 +3,14 @@ Final for ENV S 193DS Spring 2026
 
 ## General information
 
-- info about what the repo is for (what analyses, etc.)
-- who is contributing to the repo and where it came from if it's a fork
+This repo contains an example of a binomial logistic regression.
+This is a fork from the ENVS-193DS-2026 organization.
 
 ## Data and file information
 
-- describe the files corresponding to data
-- describe the files corresponding to code
-- (optional but nice) provide a tree diagram
+The `code` folder includes all code for the model and assignment.
+The `data` folder includes all data files for the model and personal data project visualization.
 
 ## Rendered output
 
-- link to any rendered pdf from a qmd
+The link to the rendered document can be found [here](https://github.com/ShunjiShimo/ENVS-193DS_spring-2026_final/blob/main/code/envs-193ds-spring-2026-final.pdf).
