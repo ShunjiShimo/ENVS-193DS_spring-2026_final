@@ -1,5 +1,5 @@
 ---
-title: "envs-193ds-spring-2026-final"
+title: "ENVS 193 Spring 2026 Final"
 author: "Shunji Shimoyoshi"
 date: 06-07-2026
 format: pdf
@@ -64,10 +64,17 @@ nests_clean <- nests |>
     "BBR" ~ "Crematogaster nigriceps"
   )) |> 
   # reordering levels of ant species
-  mutate(ant_species = fct_relevel(ant_species,
-                             "AB",
-                             "RRB", 
-                             "BBR"))
+  mutate(ant_species = as_factor(ant_species),
+         ant_species = fct_relevel(ant_species,
+                                   "AB",
+                                   "RRB",
+                                   "BBR")) |> 
+  mutate(scientific_name = as_factor(scientific_name),
+         scientific_name = fct_relevel(scientific_name,
+                                   "Crematogaster sjostedti",
+                                   "Crematogaster mimosae",
+                                   "Crematogaster nigriceps"))
+      
 
 ```
 
@@ -144,23 +151,32 @@ plot(
 ## h. Visualize the model predictions
 
 ```{r}
+#| label: nest model predictions
 
-nests_mod_preds <- ggpredict(nests_mod2,
-                             terms = "height_cm [all]")
+# creating a new object
+nests_mod2_preds <- ggpredict(
+  nests_mod2, # model
+  terms = c("height_cm", "ant_species") # predictor variable
+)
+
+```
+
+```{r}
 
 ggplot(data = nests_clean,
        aes(x = height_cm,
            y = case_control)) +
   geom_point(size = 3,
              alpha = 0.4) +
-  geom_line(data = nests_mod_preds,
+  geom_line(data = nests_mod2_preds,
             aes(x = x,
                 y = predicted)) +
-  geom_ribbon(data = nests_mod_preds,
+  geom_ribbon(data = nests_mod2_preds,
               aes(x = x,
                   y = predicted,
                   ymin = conf.low,
-                  ymax = conf.high),
+                  ymax = conf.high,
+                  fill = group),
               alpha = 0.4) +
   facet_wrap(~ ant_species) +
   theme_light()
