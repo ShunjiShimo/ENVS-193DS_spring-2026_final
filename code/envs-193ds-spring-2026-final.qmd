@@ -68,12 +68,7 @@ nests_clean <- nests |>
          ant_species = fct_relevel(ant_species,
                                    "AB",
                                    "RRB",
-                                   "BBR")) |> 
-  mutate(scientific_name = as_factor(scientific_name),
-         scientific_name = fct_relevel(scientific_name,
-                                   "Crematogaster sjostedti",
-                                   "Crematogaster mimosae",
-                                   "Crematogaster nigriceps"))
+                                   "BBR"))
 
 ```
 
@@ -150,26 +145,35 @@ plot(
 ## h. Visualize the model predictions
 
 ```{r}
-#| label: nest model predictions
+#| label: creating model prediction
 
 # creating a new object
 nests_mod2_preds <- ggpredict(
   nests_mod2, # model
-  terms = c("height_cm", "ant_species") # predictor variable
+  terms = c("height_cm [all]", "ant_species") # predictor variable
 )
 
 ```
 
 ```{r}
+#| label: data visualization
 
+# base layer: ggplot
 ggplot(data = nests_clean,
+       # x-axis: height
+       # y-axis: probability of bird nesting
        aes(x = height_cm,
            y = case_control)) +
-  geom_point(size = 3,
-             alpha = 0.4) +
+  # first layer: points to represent individual observations
+  geom_point(aes(color = ant_species),
+             size = 3,
+             alpha = 1) +
+  # second layer: model prediction as a line
   geom_line(data = nests_mod2_preds,
             aes(x = x,
-                y = predicted)) +
+                y = predicted,
+                color = group)) +
+  # third layer: 95% CI from model prediction as a line
   geom_ribbon(data = nests_mod2_preds,
               aes(x = x,
                   y = predicted,
@@ -177,33 +181,45 @@ ggplot(data = nests_clean,
                   ymax = conf.high,
                   fill = group),
               alpha = 0.4) +
-  facet_wrap(~ ant_species) +
-  theme_light()
+  # separating into 3 graphs for each ant species
+  facet_wrap(~ ant_species,
+             # relabeling each graph
+             labeller = labeller(
+               ant_species = c(AB = "Crematogaster sjostedti",
+                               RRB = "Crematogaster mimosae",
+                               BBR = "Crematogaster nigriceps"))) +
+  # changing theme
+  theme_light() +
+  # removing legend
+  theme(legend.position = "none") +
+  # relabeling x and y-axes
+  labs(x = "Height of Tree (cm)",
+       y = "Probability of Bird Nesting") +
+  # removing gridlines
+  theme(panel.grid = element_blank())
   
-
-
-
-
 ```
 
 ## i. Wite a caption for your figure
 
-
+**Figure 2. Probability of bird nesting based on tree height and ant species** This figure shows the probability of bird nesting based on tree height and what ant species the tree is hosting. Birds primarily nested in trees with *C. mimosae* and *C. nigriceps*. Data citation: Lujan, E., Nielsen, R., Short, Z., Wicks, S., Nderitu Watetu, W., Malingati Khasoha, L., Palmer, T. M., Goheen, J. R., & Alston, J. M. (2023). Data, code, and metadata for: Symbiotic acacia ants drive nesting behavior by birds in an African savanna [Data set]. Zenodo. https://doi.org/10.5281/zenodo.8373322
 
 ## j. Calculate model predictions
 
 ```{r}
+#| label: model prediction
 
+# predicting nesting probability when tree height is 600cm
 ggpredict(nests_mod2,
           terms = c("height_cm [600]",
                     "ant_species"))
-
-
 ```
 
 ## k. Interpret your results
 
+Tree height and ant species presence interact to predict probability of bird nesting in acacia trees. As tree height increases, the probability of bird nesting increases. Additionally, the ant species *Crematogaster mimosae* and *Crematogaster nigriceps* had a great effect on nesting probability than *Crematogaster sjostedti*. At tree height 600cm, bird nesting probability is 0 (95% CI: [0.00, 1.00]) for *Crematogaster sjostedti*, while it is 0.80 (95% CI: [0.34, 0.97]) for *Crematogaster mimosae* and 1.00 (95% CI: [0.00, 1.00]) for *Crematogaster nigriceps* respectively.
 
+This relationship aligns with biological trends. Bird nesting is more successful in higher trees given it is further away from grazing mammals and predators. The two ant species *Crematogaster mimosae* and *Crematogaster nigriceps* are more aggressive in protecting their host trees, allowing for more successful bird nesting in their presence.
 
 # Problem 3. Affective and exploratory visualizations
 
@@ -222,7 +238,7 @@ Both my response variable, total daily time spent biking, and my predictor varia
 ### Model fitting
 
 ```{r}
-#| label: cleaning data
+#| label: cleaning bike data
 
 # creating new object
 bike_clean <- bike |> 
@@ -335,7 +351,7 @@ ggplot(data = bike_clean,
 
 ## e. Write a caption
 
-**Figure 1. Daily Duration of Activities Effect on Time Spent Biking** As duration of day's activities increases, daily total time spent biking also increases. Individual daily observations are shown as blue dots on the graph as well as a 95% confidence interval.
+**Figure 2. Daily Duration of Activities Effect on Time Spent Biking** As duration of day's activities increases, daily total time spent biking also increases. Individual daily observations are shown as blue dots on the graph as well as a 95% confidence interval.
 
 ## f. Write about your results
 
