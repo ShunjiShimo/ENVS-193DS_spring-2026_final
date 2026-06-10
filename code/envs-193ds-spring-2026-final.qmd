@@ -74,7 +74,6 @@ nests_clean <- nests |>
                                    "Crematogaster sjostedti",
                                    "Crematogaster mimosae",
                                    "Crematogaster nigriceps"))
-      
 
 ```
 
@@ -187,9 +186,9 @@ ggplot(data = nests_clean,
 
 ```
 
-
-
 ## i. Wite a caption for your figure
+
+
 
 ## j. Calculate model predictions
 
@@ -202,9 +201,8 @@ ggpredict(nests_mod2,
 
 ```
 
-
-
 ## k. Interpret your results
+
 
 
 # Problem 3. Affective and exploratory visualizations
